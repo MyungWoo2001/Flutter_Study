@@ -28,6 +28,11 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> putUser(User user) async {
+    await _service.putUser(user);
+    await loadingUsers();
+  }
+
   void deleteUserFromUI(int id) {
     _users.removeWhere((item) => item.id == id);
     notifyListeners();

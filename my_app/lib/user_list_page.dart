@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_app/user_input.dart';
 import 'package:provider/provider.dart';
 import 'user_provider.dart';
+import 'user_edit.dart';
 
 class UserListPage extends StatefulWidget {
   const UserListPage({super.key});
@@ -31,7 +32,7 @@ class _UserListPageState extends State<UserListPage> {
           final user = provider.users[index];
           return ListTile(  
             title: Text(user.name),
-            subtitle: Text("Age: ${user.age}"),
+            subtitle: Text("Age: ${user.mail}"),
             trailing: IconButton(  
               icon: const Icon(Icons.delete),
               onPressed: () {
@@ -70,6 +71,12 @@ class _UserListPageState extends State<UserListPage> {
                 
               }
             ),
+            onTap: () async {
+              Navigator.push(
+                context, 
+                MaterialPageRoute(builder: (context) => UserEdit(user: user)),
+              );
+            },
           );
         },
       ),

@@ -4,16 +4,7 @@ let app = express();
 let PORT = 3000;
 
 let users = [
-    {id: 1, name: "MyungWoo", age: 22},
-    {id: 2, name: "MinhVu1", age: 24},
-    {id: 3, name: "MinhVu2", age: 21},
-    {id: 4, name: "MinhVu3", age: 20},
-    {id: 5, name: "MinhVu4", age: 25},
-    {id: 6, name: "MinhVu5", age: 23},
-    {id: 7, name: "MinhVu6", age: 12},
-    {id: 8, name: "MinhVu7", age: 18},
-    {id: 9, name: "MinhVu8", age: 16},
-    {id: 10, name: "MinhVu", age: 26},
+    {id: 1, name: "Minh Vu", mail: "minhvu@gmail.com"}
 ];
 
 function getRandomInt(max) {
@@ -32,18 +23,21 @@ app.get("/api/delay", async (req, res) => {
     }, 3000);
 });
 
-app.get("/api/random", async (req, res) => {
-    await new Promise(resolve => setTimeout(resolve, 200));
-    const num = Math.floor(Math.random() * 101);
-    res.json({number: num})
-})
-
 app.post("/api/users", (req, res) => {
-    const {name, age} = req.body;
+    const {name, mail} = req.body;
     const id = users.length + 1;
-    const newUser = {id, name, age};
+    const newUser = {id, name, mail};
     users.push(newUser);
     res.status(201).json(newUser);
+});
+
+app.put("/api/users/:id", (req, res) => {
+    const user = users.find((u) => u.id === parseInt(req.params.id));
+    if (!user) return res.status(404).json({message:"User not found!!!"});
+    const {name, mail} = req.body;
+    if(typeof name === "string") user.name = name;
+    if(typeof mail === "string") user.mail = mail;
+    res.status(200).json(user);
 });
 
 app.delete("/api/users/:id", async (req, res) => {

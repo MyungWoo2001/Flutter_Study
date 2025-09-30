@@ -4,15 +4,22 @@ import 'user.dart';
 import 'user_provider.dart';
 
 class NewUserInput extends StatefulWidget {
+  const NewUserInput({super.key});
+
   @override  
   _NewUserInputState createState() => _NewUserInputState();
 }
 
 class _NewUserInputState extends State<NewUserInput> {
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _ageController = TextEditingController();
+  final TextEditingController _mailController = TextEditingController();
 
-  
+  @override  
+  void dispose() {
+    _nameController.dispose();
+    _mailController.dispose();
+    super.dispose();
+  }
 
   @override  
   Widget build (BuildContext context) {
@@ -33,21 +40,19 @@ class _NewUserInputState extends State<NewUserInput> {
             ),
             const SizedBox(height: 20),
             TextField(  
-              controller: _ageController,
+              controller: _mailController,
               decoration: InputDecoration(  
-                labelText: "Age",
+                labelText: "Mail adress",
                 border: OutlineInputBorder(),
               )
             ),
             ElevatedButton(  
               onPressed: () async {
                 final name = _nameController.text;
-                final int? age = int.tryParse(_ageController.text);
-                if(age != null) {
+                final mail = _mailController.text;
                   await provider.addUser(  
-                    User(id:0, name: name, age: age)
+                    User(id:0, name: name, mail: mail)
                   );
-                }
                 // dismiss page
                 Navigator.pop(context);
               },
