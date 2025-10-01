@@ -32,7 +32,7 @@ class _UserListPageState extends State<UserListPage> {
           final user = provider.users[index];
           return ListTile(  
             title: Text(user.name),
-            subtitle: Text("Age: ${user.mail}"),
+            subtitle: Text("Mail: ${user.mail}"),
             trailing: IconButton(  
               icon: const Icon(Icons.delete),
               onPressed: () {
